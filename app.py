@@ -1,7 +1,22 @@
 from flask import render_template, Flask,request,jsonify
 from db import Session, UserInfo
 import user_agents
+from pymongo import MongoClient
+
 app = Flask(__name__,template_folder="templates")
+
+# Підключення до MongoDB Atlas через URI
+uri = "mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbname>?retryWrites=true&w=majority"
+client = MongoClient(uri)
+
+# Вибір бази даних
+db = client["<dbname>"]
+collection = db["your_collection"]
+
+# Приклад: знайти всі документи в колекції
+documents = collection.find({})
+for doc in documents:
+    print(doc)
 
 @app.get("/")
 def index():
